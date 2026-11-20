@@ -19,6 +19,8 @@ jobs:
           npx cap sync android
       - name: Aplicar icone
         run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick
           ICON=$(ls -A | grep -i 'png$' | head -1)
           for d in mdpi:48 hdpi:72 xhdpi:96 xxhdpi:144 xxxhdpi:192; do
             n=${d%%:*}; s=${d##*:}
