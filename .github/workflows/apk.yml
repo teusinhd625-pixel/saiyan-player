@@ -10,6 +10,8 @@ jobs:
       - uses: actions/setup-java@v4
         with: { distribution: temurin, java-version: 17 }
       - run: |
+          mkdir -p www
+          cp control-music.html www/index.html
           npm init -y
           npm i @capacitor/core@6 @capacitor/cli@6 @capacitor/android@6
           npx cap init "Control Music" com.controlmusic.app --web-dir www
