@@ -19,10 +19,11 @@ jobs:
           npx cap sync android
       - name: Aplicar icone
         run: |
+          ICON=$(ls -A | grep -i 'png$' | head -1)
           for d in mdpi:48 hdpi:72 xhdpi:96 xxhdpi:144 xxxhdpi:192; do
             n=${d%%:*}; s=${d##*:}
             for f in ic_launcher ic_launcher_round; do
-              convert icon-512.png -resize ${s}x${s} android/app/src/main/res/mipmap-$n/$f.png
+              convert "$ICON" -resize ${s}x${s} android/app/src/main/res/mipmap-$n/$f.png
             done
           done
           rm -rf android/app/src/main/res/mipmap-anydpi-v26
