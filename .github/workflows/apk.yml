@@ -15,7 +15,16 @@ jobs:
           npx cap init "Control Music" com.controlmusic.app --web-dir www
           npx cap add android
           npx cap sync android
-          cd android && chmod +x gradlew && ./gradlew assembleDebug
+      - name: Aplicar icone
+        run: |
+          for d in mdpi:48 hdpi:72 xhdpi:96 xxhdpi:144 xxxhdpi:192; do
+            n=${d%%:*}; s=${d##*:}
+            for f in ic_launcher ic_launcher_round; do
+              convert icon-512.png -resize ${s}x${s} android/app/src/main/res/mipmap-$n/$f.png
+            done
+          done
+          rm -rf android/app/src/main/res/mipmap-anydpi-v26
+      - run: cd android && chmod +x gradlew && ./gradlew assembleDebug
       - uses: actions/upload-artifact@v4
         with:
           name: control-music-apk
